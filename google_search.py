@@ -6,7 +6,7 @@ Google 搜索核心模块：免密钥纯协议搜索客户端。
   1. 检测分四层, 决定能否拿到真 SERP 的是「cookie 身份的服务端信任分 + 出口 IP 信誉」,
      不是 sg_ss 也不是 TLS 指纹(裸 curl OpenSSL 指纹带信任 cookie 照样 200 SERP)。
   2. 无信任会话会被发 challenge 页(内嵌 knitsail VM 采集环境快拍)。
-     本模块自动调 solver.js(Node + mini_browser 环境)离线解出 SG_SS,
+     本模块自动调 solver.js(Node, core 已内置)离线解出 SG_SS,
      带 &sg_ss=&sei= 回放 = 会话升级(promote), 之后可连续正常查询。
   3. performance.now 精度必须与 UA 声称的浏览器族一致(Chrome=0.1ms 量化),
      solver 环境由 harmonize.js 按 baselines.json(真 Chrome155 结构快照)对齐。
@@ -132,8 +132,7 @@ class GoogleSearch:
     cookies      信任身份:"K1=V1; K2=V2" / @cookies.txt / dict。
                  有信任 cookie → 直出 SERP; 无 → 自动走挑战求解(promote)。
     proxy        代理地址(建议钉死单一出口节点); 缺省读环境变量 GOOGLE_PROXY。
-    solver       挑战自动求解开关。需要 Node + mini_browser core(环境变量
-                 MINI_BROWSER_ROOT, 缺省 E:\\AI\\tools\\风华佬\\core)。
+    solver       挑战自动求解开关。需要 Node.js(core 已内置仓库)。
     """
 
     def __init__(self, proxy: Optional[str] = None, timeout: int = 60, hl: str = "zh-CN",
@@ -221,7 +220,7 @@ class GoogleSearch:
         if v == "challenge":
             tok = self._solve(url, r.text)
             if not tok:
-                raise GoogleSearchError("遇到挑战页且求解失败(需 Node + mini_browser core, "
+                raise GoogleSearchError("遇到挑战页且求解失败(需 Node.js, "
                                         "或注入信任 cookie)")
             self.solve_count += 1
             self._sess.cookies.update({"SG_SS": tok})

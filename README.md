@@ -11,7 +11,7 @@
 
 - 🔑 **无需 API Key**，开箱即用（信任会话 cookie 可选注入，冷会话自动求解升级）
 - 🛡️ **挑战自动求解**：无信任会话被发 knitsail 挑战页时，自动调 Node 求解器离线解出
-  `SG_SS` 并回放升级（需 Node + mini_browser core，见依赖说明）
+  `SG_SS` 并回放升级（需 Node.js，core 已内置，零配置）
 - 📄 **真实翻页**：`page` 参数直达任意页码（`start=(page-1)*10`）
 - 🧭 **搜索语法**：`"精确短语"` `site:` `-排除` `filetype:` `after:/before:` 全部实测有效
 - 📊 结果含标题、摘要、来源 cite、结果总量（与浏览器端同值）
@@ -25,15 +25,10 @@ pip install -r requirements.txt
 
 ### 挑战求解依赖（可选但强烈建议）
 
-冷会话（无信任 cookie）会被 Google 发挑战页，此时需要 Node 环境：
+冷会话（无信任 cookie）会被 Google 发挑战页，此时需要 Node.js（core 已内置仓库，
+无需额外安装；自备 core 时可用环境变量覆盖）。
 
-```bash
-# 依赖: Node.js + mini_browser core
-# core 路径用环境变量指定（缺省 E:\AI\tools\风华佬\core）
-set MINI_BROWSER_ROOT=E:\AI\tools\风华佬\core
-```
-
-若已有信任会话 cookie（浏览器导出的 NID/AEC），可跳过求解依赖直接使用。
+若已有信任会话 cookie，可跳过求解依赖直接使用。
 
 ## 🚀 快速开始
 
@@ -207,7 +202,6 @@ gs.set_cookies("@cookies.txt")     # cookies 文件
 | 变量 | 说明 |
 |---|---|
 | `GOOGLE_PROXY` | 代理地址，如 `http://127.0.0.1:7897` |
-| `MINI_BROWSER_ROOT` | mini_browser core 路径（挑战求解依赖，缺省 `E:\AI\tools\风华佬\core`） |
 
 ### 会话与出口说明
 

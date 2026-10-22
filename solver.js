@@ -24,6 +24,7 @@ function resolveCoreRoot() {
     nodeProcess.env.MINI_BROWSER_20VM_DIR,
     nodeProcess.env.MINI_BROWSER_ROOT,
     nodeProcess.env.GOOGLE_CORE_DIR,
+    path.join(__dirname, 'core'),   // 仓库内置 core（零配置）
   ].filter(Boolean);
   for (const candidate of candidates) {
     const root = path.resolve(candidate);

@@ -123,7 +123,7 @@ def meta():
         "engine": "google.com.hk (纯协议, 无浏览器)",
         "mechanism": {
             "挑战自动求解": "无信任会话被发 knitsail 挑战页时, 自动调 solver.js "
-                       "(Node + mini_browser 环境, 结构对齐真 Chrome155) 离线解出 SG_SS 回放升级",
+                       "(Node, core 已内置, 结构对齐真 Chrome155) 离线解出 SG_SS 回放升级",
             "翻页": "start=(page-1)*10, 服务端真实翻页",
             "出口要求": "钉死单一可达出口节点; 商宽/被标记 IP 会在 solve 验收层被拒(与客户端无关)",
             "cookie": "信任会话 cookie(如浏览器导出的 NID/AEC) 直出 SERP; "
@@ -144,8 +144,7 @@ def meta():
         ],
         "dependencies": {
             "python": "curl_cffi(必需) / fastapi+uvicorn(服务)",
-            "challenge求解": "Node + mini_browser core "
-                          "(环境变量 MINI_BROWSER_ROOT, 缺省 E:\\AI\\tools\\风华佬\\core)",
+            "challenge求解": "Node.js（core 已内置）",
         },
     }
 
